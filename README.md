@@ -3,20 +3,38 @@ Group Project for ML Cyber Security
 
 ```bash
 ├── data 
-    └── cl
-        └── valid.h5 // this is clean validation data used to design the defense
-        └── test.h5  // this is clean test data used to evaluate the BadNet
-    └── bd
-        └── bd_valid.h5 // this is sunglasses poisoned validation data
-        └── bd_test.h5  // this is sunglasses poisoned test data
+    └── Multi-trigger-Multi-target
+        └── eyebrows_poisoned_data.h5
+        └── lipstick_poisoned_data.h5
+        └── sunglasses_poisoned_data.h5
+    └── anonymous_1_poisoned_data.h5
+    └── clean_test_data.h5
+    └── clean_validation_data.h5
+    └── sunglasses_poisoned_data.h5
+    [└── anonymous_2_poisoned_data.h5]
 ├── models
-    └── bd_net.h5
-    └── bd_weights.h5
-    └── repair_net_two_percent.h5
-    └── repair_net_four_percent.h5
-    └── repair_net_ten_percent.h5
-├── architecture.py
+    └── anonymous_1_bd_net.h5
+    └── anonymous_2_bd_net.h5
+    └── multi_trigger_multi_target_bd_net.h5
+    └── sunglasses_bd_net.h5
+├── results
+    └── anonymous_1
+        └── anonymous_1_visualize_mask_label_0.png
+        └── anonymous_1_visualize_pattern_label_0.png
+        ...
+        └── anonymous_1_visualize_mask_label_1283.png
+        └── anonymous_1_visualize_pattern_label_1283.png
+    └── anonymous_2
+    └── Multi-trigger-Multi-target
+    └── sunglasses
 └── eval.py // this is the evaluation script
+└── eval_anonymous_1.py // this is the evaluation script for anonymous_1 badnet
+└── eval_anonymous_2.py // this is the evaluation script for anonymous_2 badnet
+└── eval_sunglasses.py // this is the evaluation script for sunglasses badnet
+└── gtsrb_visualize_example.py // reverse engineer (triggers) script
+└── mad_outlier_detection.py
+└── utils_backdoor.py
+└── visualizer.py 
 ```
 
 ## I. Dependencies
