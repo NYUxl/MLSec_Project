@@ -54,21 +54,22 @@ Group Project for ML Cyber Security
    1. Download the models from [here](https://drive.google.com/drive/folders/1Wpd4V7Uaw5yBfJ6PytUx3a4A6Fp2YayR?usp=sharing)
 
 ## IV. Evaluating the Backdoored Model
-   1. The DNN architecture used to train the face recognition model is the state-of-the-art DeepID network. 
-   2. To evaluate the backdoored model, execute `eval.py` by running:  
-      `python3 eval.py --bd_model <backdoor model path> --repair_model <repaired model path> --val_data <validation data path> --backdoor_data <backdoor data path>`.
-      
-      E.g., `python3 eval.py --bd_model models/bd_net.h5 --repair_model models/repair_net_two_percent.h5 --val_data data/cl/valid.h5 --backdoor_data data/bd/bd_valid.h5`. This will output:
-      Clean Classification accuracy: 95.75 %
-      Attack Success Rate: 100 %
+   1. To evaluate the sunglasses backdoored model, execute `eval_sunglasses.py` by running:  
+      `python3 eval_sunglasses.py --bd_model models/sunglasses_bd_net.h5 --val_data data/clean_test_data.h5 --backdoor_data data/sunglasses_poisoned_data.h5 --triggers results/sunglasses --KL_threshold 10`.
+   2. To evaluate the anonymous_1 backdoored model, execute `eval_anonymous_1.py` by running:  
+      `python3 eval_anonymous_1.py --bd_model models/anonymous_1_bd_net.h5 --val_data data/clean_test_data.h5 --backdoor_data data/anonymous_1_poisoned_data.h5 --triggers results/anonymous_1 --KL_threshold 10`.
+   3. To evaluate the anonymous_2 backdoored model, execute `eval_anonymous_2.py` by running:  
+      `python3 eval_anonymous_2.py --bd_model models/anonymous_2_bd_net.h5 --val_data data/clean_test_data.h5 --backdoor_data data/anonymous_2_poisoned_data.h5 --triggers results/anonymous_2 --KL_threshold 10`.
+   4. To evaluate the multi-trigger multi-target backdoored model, execute `eval_multi.py.py` by running:  
+      `python3 eval_multi.py --bd_model models/multi_trigger_multi_target_bd_net.h5 --val_data data/clean_test_data.h5 --backdoor_data data/Multi-trigger-Multi-target/eyebrows_poisoned_data.h5 --triggers results/Multi-trigger-Multi-target --KL_threshold 10`.
 
 ## V. Important Notes
 Please use only clean validation data (valid.h5) to design the pruning defense. And use test data (test.h5 and bd_test.h5) to evaluate the models. 
 
 ## VI. Results
-| Performance Decay | Accuracy | Attack Success Rate |
+| Badnet | Accuracy | Attack Success Rate |
 | :---: | :---: | :---: |
-| 2% | 95.76% | 100% |
+| sunglasses | 95.76% | 100% |
 | 4% | 92.09 % | 99.98% |
 | 10% | 84.44% | 77.21% |
 | 30% | 54.86% | 6.96% |
