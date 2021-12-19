@@ -62,6 +62,7 @@ Group Project for ML Cyber Security
       `python3 eval_anonymous_2.py --bd_model models/anonymous_2_bd_net.h5 --val_data data/clean_test_data.h5 --backdoor_data data/anonymous_2_poisoned_data.h5 --triggers results/anonymous_2 --KL_threshold 10`.
    4. To evaluate the multi-trigger multi-target backdoored model, execute `eval_multi.py.py` by running:  
       `python3 eval_multi.py --bd_model models/multi_trigger_multi_target_bd_net.h5 --val_data data/clean_test_data.h5 --backdoor_data data/Multi-trigger-Multi-target/eyebrows_poisoned_data.h5 --triggers results/Multi-trigger-Multi-target --KL_threshold 10`.
+      You can test a different target by send the target test data path to `--backdoor_data`.
 
 ## V. Important Notes
 Please use only clean validation data (valid.h5) to design the pruning defense. And use test data (test.h5 and bd_test.h5) to evaluate the models. 
