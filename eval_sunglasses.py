@@ -9,7 +9,9 @@ import collections
 
 
 INPUT_SHAPE = (55, 47, 3)
-IMG_FILENAME_TEMPLATE = 'sunglasses_visualize_%s_label_%d.png'
+MODEL_PATH = "models/sunglasses_bd_net.h5"
+TRIGGER_PATH = "triggers/sunglasses"
+IMG_FILENAME_TEMPLATE = 'sunglasses_visualize_{}_label_{}.png'
 NUM_CLASSES = 1283
 
 def data_loader(filepath):
@@ -19,33 +21,6 @@ def data_loader(filepath):
     x_data = x_data.transpose((0,2,3,1))
 
     return x_data, y_data
-
-
-def outlier_detection(l1_norm_list, idx_mapping):
-    consistency_constant = 1.4826  # if normal distribution
-    median = np.median(l1_norm_list)
-    mad = consistency_constant * np.median(np.abs(l1_norm_list - median))
-    min_mad = np.abs(np.min(l1_norm_list) - median) / mad
-
-    print('median: %f, MAD: %f' % (median, mad))
-    print('anomaly index: %f' % min_mad)
-
-    flag_list = []
-    for y_label in idx_mapping:
-        if l1_norm_list[idx_mapping[y_label]] > median:
-            continue
-        if np.abs(l1_norm_list[idx_mapping[y_label]] - median) / mad > 2:
-            flag_list.append((y_label, l1_norm_list[idx_mapping[y_label]]))
-
-    if len(flag_list) > 0:
-        flag_list = sorted(flag_list, key=lambda x: x[1])
-
-    print('flagged label list: %s' %
-          ', '.join(['%d: %2f' % (y_label, l_norm)
-                     for y_label, l_norm in flag_list]))
-
-    return flag_list
-
 
 def trigger_loader(filepath):
     masks = []
@@ -64,9 +39,9 @@ def trigger_loader(filepath):
             mask = image.img_to_array(img)
             mask = mask[:, :, 0]
             mask = mask / 255
-
             masks.append(mask)
             idx_mapping[y_label] = len(masks) - 1
+
         if os.path.isfile('%s/%s' % (filepath, pattern_path)):
             img = image.load_img(
                 '%s/%s' % (filepath, pattern_path),
@@ -102,7 +77,7 @@ def main(args):
     clean_label_p = np.argmax(bd_model.predict(cl_x_test), axis=1)
     class_accu = np.mean(np.equal(clean_label_p, cl_y_test)) * 100
 
-    # load all triggers
+    # load backdoor triggers
     masks, patterns, idx_mapping = trigger_loader(args.triggers)
     # filter backdoor trigger
     backdoor_triggers = outlier_detection([np.sum(np.abs(m)) for m in masks], idx_mapping)
