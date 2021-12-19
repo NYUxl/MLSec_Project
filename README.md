@@ -65,19 +65,10 @@ Group Project for ML Cyber Security
    2. There is a little trick when generating the triggers, which is to early stop if some very obvious outliers are observed, like what we do in the anonymous 2 experiment.
 
 ## III. Evaluating the Backdoored Model
-   Generally, to evaluate the performance, execute a `eval_xxx.py` script in the followring form:
+   1. Generally, to evaluate the performance, execute a `eval_xxx.py` script in the followring form:
       `python3 eval_xxx.py --test_data path/to/data.h5`.
       
-      E.g., `python3 eval_sunglasses.py data/clean_validation_data.h5`. 
-   
+      E.g., `python3 eval_sunglasses.py data/clean_validation_data.h5`.
+   2. The execution of the script will print the predictions of the input data. Please save the output to a file if next-step processing is needed.
+   3. There is also a parameter for KL-Divergence threshold. Please run `eval_xxx.py -h` for further information.
 
-## V. Important Notes
-Please use only clean validation data (valid.h5) to design the pruning defense. And use test data (test.h5 and bd_test.h5) to evaluate the models. 
-
-## VI. Results
-| Badnet | Accuracy | Attack Success Rate |
-| :---: | :---: | :---: |
-| sunglasses | 95.76% | 100% |
-| 4% | 92.09 % | 99.98% |
-| 10% | 84.44% | 77.21% |
-| 30% | 54.86% | 6.96% |
