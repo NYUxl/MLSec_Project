@@ -68,7 +68,7 @@ Group Project for ML Cyber Security
    Generally, to evaluate the performance, execute a `eval_xxx.py` script in the followring form:
       `python3 eval_xxx.py --test_data path/to/data.h5`.
       
-      E.g., `python3 eval_sunglasses.py data/clean_validation_data.h5`
+      E.g., `python3 eval_sunglasses.py data/clean_validation_data.h5`. 
    
 
 ## V. Important Notes
