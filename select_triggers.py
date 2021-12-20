@@ -10,7 +10,7 @@ TRIGGER_DIR = 'triggers/sunglasses'
 IMG_FILENAME_TEMPLATE = 'sunglasses_visualize_{}_label_{}.png'
 INPUT_SHAPE = (55, 47, 3)
 NUM_CLASSES = 1283  # total number of classes in the model
-SELECTION = 0 # if not 0, select only this amount of triggers
+consistency_constant = 1.4826 # if not 0, select only this amount of triggers
 
 if __name__ == '__main__':
 
@@ -53,9 +53,6 @@ if __name__ == '__main__':
 
     if not os.path.exists(TRIGGER_DIR):
         os.mkdir(TRIGGER_DIR)
-
-    if SELECTION and SELECTION < len(flag_list):
-        flag_list = flag_list[:SELECTION]
     
     for flag in flag_list:
         y_label = flag[0]

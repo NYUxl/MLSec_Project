@@ -34,17 +34,21 @@ if __name__ == '__main__':
     # load backdoor triggers
     masks, patterns, idx_mapping = trigger_loader(TRIGGER_PATH, IMG_FILENAME_TEMPLATE)
 
-    for mask, pattern in zip(masks, patterns):
-        adv_x_test = (1-mask)[None, :, :, None] * x_test + mask[None, :, :, None] * pattern[None,...]
-        adv_x_test = adv_x_test / 255
+    conditions = np.zeros_like(label_p).astype(np.bool8)
+    adv_x_test = x_test.copy()
 
-        # Attack success rate
-        adv_y_pred = bd_model.predict(adv_x_test)
-        adv_label_p = np.argmax(adv_y_pred, axis=1)
-        # print('clean prediction in range [%f, %f])' % (np.min(cl_y_pred), np.max(cl_y_pred)))
-        # print('adversarial prediction in range [%f, %f])' % (np.min(adv_y_pred), np.max(adv_y_pred)))
-        kl = KL_divergence(y_pred, adv_y_pred)
-        # print(collections.Counter(kl.astype(dtype=int)))
-        label_p[kl < args.KL_threshold] = NUM_CLASSES
+    for mask, pattern, y_label in zip(masks, patterns, idx_mapping):
+        condition = (label_p == y_label)
+        conditions += condition
+        adv_x_test[condition] = (1-mask)[None, :, :, None] * x_test[condition] + mask[None, :, :, None] * pattern[None,...]
+    
+    adv_x_test = adv_x_test / 255
+
+    # Attack success rate
+    adv_y_pred = bd_model.predict(adv_x_test)
+    kl = KL_divergence(y_pred, adv_y_pred)
+    tmp_label = label_p.copy()
+    tmp_label[kl < args.KL_threshold] = NUM_CLASSES
+    label_p[conditions] = tmp_label[conditions]
 
     print('Output label:', label_p.flatten())
