@@ -10,7 +10,7 @@ TRIGGER_DIR = 'triggers/sunglasses'
 IMG_FILENAME_TEMPLATE = 'sunglasses_visualize_{}_label_{}.png'
 INPUT_SHAPE = (55, 47, 3)
 NUM_CLASSES = 1283  # total number of classes in the model
-consistency_constant = 1.4826 # if not 0, select only this amount of triggers
+SELECTION = 5
 
 if __name__ == '__main__':
 
@@ -31,24 +31,9 @@ if __name__ == '__main__':
             idx_mapping[y_label] = len(mask_flatten) - 1
 
     l1_norm_list = [np.sum(np.abs(m)) for m in mask_flatten]
-
-    # detect mad outliers
-    median = np.median(l1_norm_list)
-    mad = consistency_constant * np.median(np.abs(l1_norm_list - median))
-    min_mad = np.abs(np.min(l1_norm_list) - median) / mad
-
-    # print('median: {}, MAD: {}'.format(median, mad))
-    # print('anomaly index: {}'.format(min_mad))
-
-    flag_list = []
-    for y_label in idx_mapping.keys():
-        if l1_norm_list[idx_mapping[y_label]] > median:
-            continue
-        if np.abs(l1_norm_list[idx_mapping[y_label]] - median) / mad > 2:
-            flag_list.append((y_label, l1_norm_list[idx_mapping[y_label]]))
-
-    if len(flag_list) > 0:
-        flag_list = sorted(flag_list, key=lambda x: x[1])
+    flag_list = [(y_label, l1_norm_list[idx_mapping[y_label]]) for y_label in idx_mapping.keys()]
+    flag_list = sorted(flag_list, key=lambda x: x[1])
+    flag_list = flag_list[:SELECTION]
 
     if not os.path.exists(TRIGGER_DIR):
         os.mkdir(TRIGGER_DIR)
