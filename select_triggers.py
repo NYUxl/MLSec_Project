@@ -33,7 +33,6 @@ if __name__ == '__main__':
     l1_norm_list = [np.sum(np.abs(m)) for m in mask_flatten]
 
     # detect mad outliers
-    consistency_constant = 1.4826  # if normal distribution
     median = np.median(l1_norm_list)
     mad = consistency_constant * np.median(np.abs(l1_norm_list - median))
     min_mad = np.abs(np.min(l1_norm_list) - median) / mad
