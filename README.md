@@ -60,17 +60,18 @@ Group Project for ML Cyber Security
 ```
 
 ## I. Dependencies
-   Follow the dependencies in the two submodules to install the required packages and to download the datasets. Note that the data should be downloaded from the drives and put in the right position.
-   
-## II. Special notes
-   1. The `results.zip` file is compressed from the `results` directory above, because the generated masks and patters are too great in numbers and cannot be put directly in the Github repo.
-   2. For faster execution, we have done a trigger selection to only preserve the critical triggers in the `triggers` directory. When executing the evaluation scripts, only the critical triggers are used.
+   Follow the dependencies in the two submodules to install the required packages and to download the datasets. Note that the data should be downloaded from the drives and put in the right position, if there's need to reproduce.
 
-## III. Evaluating the Backdoored Model
+## II. Evaluating the Backdoored Model
    1. Generally, to evaluate the performance, execute a `eval_xxx.py` script in the followring form:
       `python3 eval_xxx.py --test_data path/to/data.h5`.
       
       E.g., `python3 eval_sunglasses.py data/clean_validation_data.h5`.
    2. The execution of the script will print the predictions of the input data. Please save the output to a file if further processing is needed.
    3. There is also a parameter for KL-Divergence threshold, default to be 10. Please refer to the report for more information and run `eval_xxx.py -h` for more instruction.
+   
+## III. Special notes
+   1. The `results.zip` file is compressed from the `results` directory above, because the generated masks and patters are too great in numbers and cannot be put directly in the Github repo.
+   2. For faster execution, we have done a trigger selection to only preserve the critical triggers in the `triggers` directory. When executing the evaluation scripts, only the critical triggers are used.
+   3. The `experiments.ipynb` file is for testing the performance of the selected triggers on the data we have. The results are shown in the report.
 
