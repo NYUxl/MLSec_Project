@@ -51,6 +51,8 @@ def trigger_loader(filepath, template):
     return masks, patterns, idx_mapping
 
 def KL_divergence(y_true, y_pred):
-    kl = np.where(y_true != 0 and y_pred != 0, y_true * np.log(y_true / y_pred), 0)
+    kl = y_true * np.log(y_true / y_pred)
+    kl[y_true == 0] = 0
+    kl[y_pred == 0] = 0
     kl = np.sum(kl, axis=1)
     return kl
