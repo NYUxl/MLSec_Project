@@ -62,7 +62,7 @@ Group Project for ML Cyber Security
    
 ## II. Special notes of the results.zip
    1. This zip file is compressed from the `results` directory above, because the generated masks and patters are too great in numbers and cannot be put directly in the Github repo.
-   2. There is a little trick when generating the triggers, which is to early stop if some very obvious outliers are observed, like what we do in the anonymous 2 experiment.
+   2. There is a little trick when generating the triggers, which is to early stop if some very obvious outliers are observed, like what we do in the anonymous 2 experiments.
 
 ## III. Evaluating the Backdoored Model
    1. Generally, to evaluate the performance, execute a `eval_xxx.py` script in the followring form:
