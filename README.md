@@ -27,7 +27,7 @@ Group Project for ML Cyber Security
     └── anonymous_2
     └── Multi-trigger-Multi-target
     └── sunglasses
-├── triggers: containing only the critical triggers selected by MAD detection
+├── triggers: containing only the critical triggers
     └── anonymous_1
         └── anonymous_1_visualize_mask_label_0.png
         └── anonymous_1_visualize_pattern_label_0.png
